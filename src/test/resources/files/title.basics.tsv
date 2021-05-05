@@ -1,0 +1,16 @@
+tconst	titleType	primaryTitle	originalTitle	isAdult	startYear	endYear	runtimeMinutes	genres
+tt0000002	short	Le clown et ses chiens	Le clown et ses chiens	0	1892	\N	5	Animation,Short
+tt0000003	short	Pauvre Pierrot	Pauvre Pierrot	0	1892	\N	4	Animation,Comedy,Romance
+tt0000004	short	Un bon bock	Un bon bock	0	1892	\N	12	Animation,Short
+tt0000005	short	Blacksmith Scene	Blacksmith Scene	0	1893	\N	1	Comedy,Short
+tt0000006	short	Chinese Opium Den	Chinese Opium Den	0	1894	\N	1	Short
+tt0111951	tvSeries	The End of the Year Show	The End of the Year Show	0	1995	1998	60	\N
+tt0111952	tvSeries	The Enid Blyton Adventure Series	The Enid Blyton Adventure Series	0	1996	\N	30	Adventure,Drama,Family
+tt0111953	tvSeries	Éretlenek	Éretlenek	0	1995	\N	\N	Comedy,Drama
+tt0111954	tvSeries	Extreme	Extreme	0	1995	1995	60	Adventure,Drama
+tt0111964	tvSeries	Flipper	Flipper	0	1995	2000	60	Action,Adventure,Drama
+tt0007015	movie	The Man Inside	The Man Inside	0	1916	\N	50	Crime,Drama,Mystery
+tt0007016	movie	The Man Who Bought London	The Man Who Bought London	0	1916	\N	\N	Crime,Drama
+tt0007017	movie	The Man Who Stood Still	The Man Who Stood Still	0	1916	\N	\N	Drama
+tt0007018	movie	The Man Who Would Not Die	The Man Who Would Not Die	0	1916	\N	\N	Drama
+tt0007019	movie	The Man with the Glass Eye	The Man with the Glass Eye	0	1916	\N	\N	Crime,Drama
