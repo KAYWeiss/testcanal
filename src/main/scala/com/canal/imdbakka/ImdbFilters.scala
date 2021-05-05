@@ -4,12 +4,11 @@ import akka.stream._
 import akka.stream.scaladsl._
 import akka.actor.ActorSystem
 import java.nio.file.Paths
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{Future,ExecutionContext}
 import scala.util.{Success, Failure}
-import com.canal.config.Config._
+import com.canal.utils.Config._
+import com.canal.utils.ImdbFileParser
 import com.canal.models._
-import com.canal.fileparser.ImdbFileParser
 import Utils._
 
 object ImdbFilters {
@@ -30,21 +29,11 @@ object ImdbFilters {
         .map(cm => cm.nconst)
     }
 
-   /* def filterCrewMemberOnTitle(tconst: Future[String]): Future[Boolean] = {
-        Flow[CrewMember].filter(cm =>
-            cm.tconst == tconst)
-    }
-
-    */
     def filterPersonOnCrewMembers(crewMembers: Future[Seq[String]]) = {
         asyncFilter[Person](p => futureSeqToBoolean(crewMembers, p.nconst))
-        .map(toPrincipal)
     }
 
-    /*def filterTitlesOnSeq(episodes: Future[Seq[String]]) = {
-      Flow[Title].filter(t=> episodes.map(_.contains(t.tconst)))
-    }
-    */
+
     def countEpisodeNumber: Flow[Episode, (String, Int), _] = {
         return Flow[Episode]
         .map(e => e.parentTconst)
@@ -74,8 +63,8 @@ object ImdbFilters {
 
     def filterTitleOnEpisodes(episodes: Future[Seq[Episodes]]) = {
         asyncFilter[Title](t => futureSeqToBoolean(episodes, t.tconst))
-        .map(toTvSerie)
     }
+
     def asyncFilter[T](filter: T => Future[Boolean], parallelism : Int = 1)
                   (implicit ec : ExecutionContext) : Flow[T, T, _] =
       Flow[T].mapAsync(parallelism)(t => filter(t).map(_ -> t))

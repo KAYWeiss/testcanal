@@ -1,4 +1,4 @@
-package com.canal.config
+package com.canal.utils
 
 import com.typesafe.config.ConfigFactory
 

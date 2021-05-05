@@ -4,12 +4,11 @@ import akka.stream._
 import akka.stream.scaladsl._
 import akka.actor.ActorSystem
 import java.nio.file.Paths
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{Future,ExecutionContext}
 import scala.util.{Success, Failure}
-import com.canal.config.Config._
+import com.canal.utils.Config._
+import com.canal.utils.ImdbFileParser
 import com.canal.models._
-import com.canal.fileparser.ImdbFileParser
 
 final case class Principal(
   name: String,

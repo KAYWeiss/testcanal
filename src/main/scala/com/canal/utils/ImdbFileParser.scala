@@ -1,10 +1,10 @@
-package com.canal.fileparser
+package com.canal.utils
 
 import akka.stream._
 import akka.stream.scaladsl._
 import akka.stream.alpakka.csv.scaladsl.{CsvParsing, CsvToMap}
 import java.nio.file.Paths
-import com.canal.config.Config._
+import com.canal.utils.Config._
 import com.canal.models._
 object ImdbFileParser {
   
