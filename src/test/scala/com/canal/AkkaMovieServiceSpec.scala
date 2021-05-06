@@ -9,24 +9,18 @@ import akka.actor.ActorSystem
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
-import models._
+import org.scalatest.funsuite.AnyFunSuite
 import imdbakka._
-/*
-class AkkaMovieServiceSpec extends AnyWordSpecLike with Matchers {
+
+class AkkaMovieServiceSpec extends AnyFunSuite {
 
     implicit val system = ActorSystem("MovieService")
     implicit val materializer: ActorMaterializer = ActorMaterializer()
     implicit val ec: ExecutionContext = ExecutionContext.global
-    def fixture = 
-        new {
-            val movieService = new AkkaMovieService()
-        }
 
-    "AkkaMovieService should provide Principals from existing title" in {
-        val f = fixture
-        val futurePrincipals = f.movieService.principalsForMovieName("The Man Inside")
+    test("AkkaMovieService should provide Principals from existing title") {
+        val mv = new AkkaMovieService()
+        val futurePrincipals = mv.principalsForMovieName("The Man Inside")
             .runWith(Sink.seq)
         
         val results: Seq[Principal] = Await.result(futurePrincipals, 3.seconds)
@@ -38,14 +32,13 @@ class AkkaMovieServiceSpec extends AnyWordSpecLike with Matchers {
             Principal("Charles Burbridge", Some(1849), Some(1922), List("actor")),
             Principal("Justina Huff", Some(1893), Some(1977), List("actress")))
 
-         results should contain theSameElementsAs (expected)
+         assert(results.toSet == expected.toSet)
         }
 
+    test(" AkkaMovieService should return the 2 series with the most episodes") {
+         val mv = new AkkaMovieService()
 
-    " AkkaMovieService should return the 2 series with the most episodes" in {
-        val f = fixture
-
-        val futureTopThreeSeries = f.movieService.topTvSeriesWithGreatestNumberOfEpisodes(2)
+        val futureTopThreeSeries = mv.topTvSeriesWithGreatestNumberOfEpisodes(2)
             .runWith(Sink.seq)
         val results = Await.result(futureTopThreeSeries, 3.seconds)
 
@@ -54,33 +47,27 @@ class AkkaMovieServiceSpec extends AnyWordSpecLike with Matchers {
             TvSeries("The Enid Blyton Adventure Series", Some(1996), None, List("Adventure", "Drama", "Family"))
             )
 
-        results should contain theSameElementsAs (expected)
+        assert(results.toSet == expected.toSet)
     }
 
+    test("AkkaMovieService should return an empty sequence of principals from an inexistant film name") {
+         val mv = new AkkaMovieService()
 
-       
-    
-
-    "AkkaMovieService should return an empty sequence of principals from an inexistant film name" in {
-        val f = fixture
-
-        val futurePrincipals = f.movieService.principalsForMovieName("Yolo")
+        val futurePrincipals = mv.principalsForMovieName("Yolo")
             .runWith(Sink.seq)
         val results: Seq[Principal] = Await.result(futurePrincipals, 3.seconds)
 
-        results shouldBe empty
+        assert(results == Seq.empty)
     }
 
+    test("AkkaMovieService should return an empty sequence of series when asking for no series") {
+         val mv = new AkkaMovieService()
 
-    "AkkaMovieService should return an empty sequence of series when asking for no series" in {
-        val f = fixture
-
-        val futureEmptySeries = f.movieService.topTvSeriesWithGreatestNumberOfEpisodes(0)
+        val futureEmptySeries = mv.topTvSeriesWithGreatestNumberOfEpisodes(0)
             .runWith(Sink.seq)
         val results = Await.result(futureEmptySeries, 3.seconds)
 
-        results shouldBe empty
+        assert(results == Seq.empty)
     }
 
 }
-*/

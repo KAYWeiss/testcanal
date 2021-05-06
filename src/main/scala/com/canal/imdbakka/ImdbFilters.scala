@@ -4,11 +4,12 @@ import akka.stream._
 import akka.stream.scaladsl._
 import akka.actor.ActorSystem
 import java.nio.file.Paths
-import scala.concurrent.{Future,ExecutionContext}
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext
 import scala.util.{Success, Failure}
-import com.canal.utils.Config._
-import com.canal.utils.ImdbFileParser
+import com.canal.config.Config._
 import com.canal.models._
+import com.canal.fileparser.ImdbFileParser
 import Utils._
 
 object ImdbFilters {
@@ -25,7 +26,7 @@ object ImdbFilters {
     }
     
     def getCrewMembersFromMovie(tconst: Future[Option[String]]): Flow[CrewMember, String, _] = {
-        asyncFilter[CrewMember](cm => futureValueToBoolean(tconst, cm.tconst))
+        asyncFilter[CrewMember](cm =>futureValueToBoolean(tconst, cm.tconst))
         .map(cm => cm.nconst)
     }
 
@@ -61,7 +62,7 @@ object ImdbFilters {
       }.map(e=>e._1)
     }
 
-    def filterTitleOnEpisodes(episodes: Future[Seq[Episodes]]) = {
+    def filterTitleOnEpisodes(episodes: Future[Seq[String]]) = {
         asyncFilter[Title](t => futureSeqToBoolean(episodes, t.tconst))
     }
 

@@ -4,11 +4,12 @@ import akka.stream._
 import akka.stream.scaladsl._
 import akka.actor.ActorSystem
 import java.nio.file.Paths
-import scala.concurrent.{Future,ExecutionContext}
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext
 import scala.util.{Success, Failure}
-import com.canal.utils.Config._
-import com.canal.utils.ImdbFileParser
-import com.canal.models._
+import com.canal.config.Config._
+import com.canal.fileparser.ImdbFileParser._
+import com.canal.imdbakka.ImdbFilters._
 
 final case class Principal(
   name: String,
@@ -22,14 +23,14 @@ final case class TvSeries(
     endYear: Option[Int],
     genres: List[String]
   )
-class AkkaMovieRunner(implicit system: ActorSystem, materializer: ActorMaterializer, ec: ExecutionContext){
+class AkkaMovieService(implicit system: ActorSystem, materializer: ActorMaterializer, ec: ExecutionContext){
    
     def principalsForMovieName(name: String) = {
-        val titles = ImdbFileParser.parseFile(TITLES_FILE)
+        val titles = parseFile(TITLES_FILE)
         .map(castTitle(_))
-        val persons = ImdbFileParser.parseFile(PERSONS_FILE)
+        val persons = parseFile(PERSONS_FILE)
         .map(castPerson(_))
-        val crewmembers = ImdbFileParser.parseFile(CREWMEMBERS_FILE)
+        val crewmembers = parseFile(CREWMEMBERS_FILE)
         .map(castCrewMember(_))
         
         val tconst = titles
@@ -41,7 +42,7 @@ class AkkaMovieRunner(implicit system: ActorSystem, materializer: ActorMateriali
             .runWith(Sink.seq)
         
         persons
-            .via(filterPersonOnCrewMembers(nconst))
+            .via(filterPersonOnCrewMembers(nconsts))
             .map(p => Principal(
                 p.primaryName, 
                 p.birthYear, 
@@ -50,10 +51,10 @@ class AkkaMovieRunner(implicit system: ActorSystem, materializer: ActorMateriali
     }
 
     def topTvSeriesWithGreatestNumberOfEpisodes(topNumber: Int) = {
-        val titles = ImdbFileParser.parseFile(TITLES_FILE)
+        val titles = parseFile(TITLES_FILE)
             .map(castTitle(_))
         
-            val episodes = ImdbFileParser.parseFile(EPISODES_FILE)
+            val episodes = parseFile(EPISODES_FILE)
             .map(castEpisode(_))
 
         val topEpisodes = episodes
