@@ -16,11 +16,11 @@ Before using the code for the queries, the files should be downloaded thanks to 
 ## Run
 To retrieve the principals from a movie (e.g. Carmencita):
 
-`sbt "run principalsFromMovie Carmencita"`
+`sbt "run movie Carmencita"`
 
 To retrieve the top 10 series :
 
-`sbt "run topTvSeries"`
+`sbt "run tvSeries"`
 
 To run the tests :
 
