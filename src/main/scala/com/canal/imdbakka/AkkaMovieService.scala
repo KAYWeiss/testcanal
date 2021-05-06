@@ -7,8 +7,8 @@ import java.nio.file.Paths
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 import scala.util.{Success, Failure}
-import com.canal.config.Config._
-import com.canal.fileparser.ImdbFileParser._
+import com.canal.utils.Config._
+import com.canal.utils.ImdbFileParser._
 import com.canal.imdbakka.ImdbFilters._
 
 final case class Principal(

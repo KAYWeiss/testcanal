@@ -8,11 +8,11 @@ import akka.stream.scaladsl.Sink
 import akka.actor.ActorSystem
 import scala.concurrent._
 import scala.concurrent.duration._
-import com.canal.config.Config._
+import com.canal.utils.Config._
+import com.canal.utils.ImdbFileParser
 import org.scalatest.funsuite.AnyFunSuite
 import imdbakka.ImdbFilters._
 import com.canal.models._
-import fileparser.ImdbFileParser
 
 class ImdbFiltersSpec extends AnyFunSuite {
 

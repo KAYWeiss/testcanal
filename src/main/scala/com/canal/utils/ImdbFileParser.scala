@@ -6,6 +6,7 @@ import akka.stream.alpakka.csv.scaladsl.{CsvParsing, CsvToMap}
 import java.nio.file.Paths
 import com.canal.utils.Config._
 import com.canal.models._
+
 object ImdbFileParser {
   
     private val delimiter: Byte = '\t'

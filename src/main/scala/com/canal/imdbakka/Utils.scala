@@ -8,7 +8,6 @@ object Utils {
         first:::x::last
     }      
 
-
     def futureSeqToBoolean[T](valuesAccepted: Future[Seq[T]], currentValue: T): Future[Boolean] = {
       valuesAccepted.map(_.contains(currentValue))
     }
